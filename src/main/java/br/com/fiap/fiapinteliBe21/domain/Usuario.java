@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import br.com.fiap.fiapinteliBe21.util.CriptografiaUtils;
-
 
 @Entity
 @Table(name = "T_IB_USUARIO")

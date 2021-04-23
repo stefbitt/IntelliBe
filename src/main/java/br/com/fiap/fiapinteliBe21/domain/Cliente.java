@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,71 +20,59 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "T_IB_CLIENTE")
-@SequenceGenerator(name="cliente",sequenceName="sq_tib_cliente",allocationSize=1)
 
 public class Cliente implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cliente")
 	@Column(name = "nr_cnpj_cpf")
 	private Long cnpjOuCpf;
 
-	@NotNull 
-	@Column(name = "tp_cliente")
+	@Column(name = "tp_cliente", nullable=false,length=2)
 	private String tipoCliente;
 	
-	@NotNull 
-	@Size(max = 60)
-	@Column(name = "nm_cliente")
+	@Column(name = "nm_cliente", nullable=false,length=60)
 	private String nomeCliente;
 
-	@NotNull 
-	@Size(max = 60)
-	@Column(name = "ds_email")
+	@Email
+	@NotNull
+	@Column(name = "ds_email", nullable=false,length=60)
 	private String descricaoEmail;
 	
-	@Size(max = 60)
-	@Column(name = "ds_endereco")
+	@Column(name = "ds_endereco",  nullable=false,length=60)
 	private String descricaoEndereco;
 	
-	@Size(max = 20)
-	@Column(name = "ds_complemento")
+	@Column(name = "ds_complemento",  nullable=false,length=30)
 	private String complementoEndereco;
 	
-	@Size(max = 30)
-	@Column(name = "ds_bairro")
+	@Column(name = "ds_bairro",  nullable=false,length=40)
 	private String bairro;
 	
-	@Size(max = 30)
-	@Column(name = "ds_cidade")
+	@Column(name = "ds_cidade",  nullable=false,length=40)
 	private String cidade;
 
-	@Size(max = 2)
-	@Column(name = "ds_estado")
+	@Column(name = "ds_estado",  nullable=false,length=2)
 	private String estado;
 	
-	@Size(max = 30)
-	@Column(name = "ds_pais")
+	@Column(name = "ds_pais" ,  nullable=false,length=40)
 	private String pais;
 
-	@Size(max = 20)
-	@Column(name = "ds_cep")
+	@Column(name = "ds_cep" ,  nullable=false,length=20)
 	private String cep;
 
-	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
-	private	List<Departamento> departamentos = new ArrayList<Departamento>();
+	private	List<Departamento> departamentos = new ArrayList<>();
 	
-	public Cliente(Long cnpjOuCpf, @NotNull String tipoCliente, @NotNull @Size(max = 60) String nomeCliente,
-			@NotNull @Size(max = 60) String descricaoEndereco, @NotNull @Size(max = 20) String complementoEndereco,
-			@NotNull @Size(max = 30) String bairro, @NotNull @Size(max = 30) String cidade,
-			@NotNull @Size(max = 2) String estado, @NotNull @Size(max = 30) String pais,
-			@NotNull @Size(max = 20) String cep) {
+
+
+	public Cliente(Long cnpjOuCpf, String tipoCliente, String nomeCliente, @Email @NotNull String descricaoEmail,
+			String descricaoEndereco, String complementoEndereco, String bairro, String cidade, String estado,
+			String pais, String cep) {
 		super();
 		this.cnpjOuCpf = cnpjOuCpf;
 		this.tipoCliente = tipoCliente;
 		this.nomeCliente = nomeCliente;
+		this.descricaoEmail = descricaoEmail;
 		this.descricaoEndereco = descricaoEndereco;
 		this.complementoEndereco = complementoEndereco;
 		this.bairro = bairro;
@@ -188,9 +177,7 @@ public class Cliente implements Serializable{
 		return departamentos;
 	}
 
-	public void setDepartamentos(List<Departamento> departamentos) {
-		this.departamentos = departamentos;
-	}
+
 
 	@Override
 	public int hashCode() {

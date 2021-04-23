@@ -14,11 +14,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
    
-    public Usuario 	buscarEmailEsenha(String email, String senha) {
+    public Usuario buscarEmailEsenha(String email, String senha) {
     	try {
     		String senhaCriptografada = criptografarSenha(senha);
-    		System.out.println("Senha criptografada = " + senhaCriptografada);
-    		System.out.println("Email  " + email);
     		Usuario usuario = usuarioRepository.findByEmailAddress(email, senhaCriptografada );
     		return usuario;
 

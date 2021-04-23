@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "T_IB_DEPTO")
@@ -33,15 +33,16 @@ public class Departamento implements Serializable{
 	@Size(max = 60)
 	private String nomeDepto;
 
-	@JsonBackReference
+	@JsonIgnore      //Para não acontecer ciclo cruzado (looping cliente x deptos)
 	@ManyToOne
 	@JoinColumn(name="nr_cnpj_cpf_id")
 	private Cliente	cliente;
 
-	public Departamento(Long idDepto, @NotNull @Size(max = 60) String nomeDepto) {
+	public Departamento(Long idDepto, @NotNull @Size(max = 60) String nomeDepto, Cliente cliente) {
 		super();
 		this.idDepto = idDepto;
 		this.nomeDepto = nomeDepto;
+		this.cliente = cliente;
 	}
 	public Departamento() {
 		super();
@@ -57,6 +58,35 @@ public class Departamento implements Serializable{
 	}
 	public void setNomeDepto(String nomeDepto) {
 		this.nomeDepto = nomeDepto;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idDepto == null) ? 0 : idDepto.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Departamento other = (Departamento) obj;
+		if (idDepto == null) {
+			if (other.idDepto != null)
+				return false;
+		} else if (!idDepto.equals(other.idDepto))
+			return false;
+		return true;
 	}
 	
 	
