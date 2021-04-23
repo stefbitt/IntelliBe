@@ -3,20 +3,13 @@ package br.com.fiap.fiapinteliBe21.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "T_IB_CLIENTE")
@@ -177,8 +170,6 @@ public class Cliente implements Serializable{
 		return departamentos;
 	}
 
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -186,7 +177,6 @@ public class Cliente implements Serializable{
 		result = prime * result + ((cnpjOuCpf == null) ? 0 : cnpjOuCpf.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
