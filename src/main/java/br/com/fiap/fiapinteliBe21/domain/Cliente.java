@@ -3,13 +3,14 @@ package br.com.fiap.fiapinteliBe21.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "T_IB_CLIENTE")
@@ -28,7 +29,6 @@ public class Cliente implements Serializable{
 	private String nomeCliente;
 
 	@Email
-	@NotNull
 	@Column(name = "ds_email", nullable=false,length=60)
 	private String descricaoEmail;
 	
@@ -53,14 +53,16 @@ public class Cliente implements Serializable{
 	@Column(name = "ds_cep" ,  nullable=false,length=20)
 	private String cep;
 
-	@OneToMany(mappedBy = "cliente")
+	@Column(name = "nr_telefone" ,  nullable=false,length=20)
+	private String telefone;
+
+	@OneToMany(cascade=CascadeType.ALL, mappedBy = "cliente")
 	private	List<Departamento> departamentos = new ArrayList<>();
-	
 
 
-	public Cliente(Long cnpjOuCpf, String tipoCliente, String nomeCliente, @Email @NotNull String descricaoEmail,
+	public Cliente(Long cnpjOuCpf, String tipoCliente, String nomeCliente, @Email String descricaoEmail,
 			String descricaoEndereco, String complementoEndereco, String bairro, String cidade, String estado,
-			String pais, String cep) {
+			String pais, String cep, String telefone) {
 		super();
 		this.cnpjOuCpf = cnpjOuCpf;
 		this.tipoCliente = tipoCliente;
@@ -73,10 +75,10 @@ public class Cliente implements Serializable{
 		this.estado = estado;
 		this.pais = pais;
 		this.cep = cep;
+		this.telefone = telefone;
 	}
 
 	public Cliente() {
-		super();
 	}
 
 	public Long getCnpjOuCpf() {
@@ -166,9 +168,19 @@ public class Cliente implements Serializable{
 		this.cep = cep;
 	}
 
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
 	public List<Departamento> getDepartamentos() {
 		return departamentos;
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -192,6 +204,15 @@ public class Cliente implements Serializable{
 		} else if (!cnpjOuCpf.equals(other.cnpjOuCpf))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [cnpjOuCpf=" + cnpjOuCpf + ", tipoCliente=" + tipoCliente + ", nomeCliente=" + nomeCliente
+				+ ", descricaoEmail=" + descricaoEmail + ", descricaoEndereco=" + descricaoEndereco
+				+ ", complementoEndereco=" + complementoEndereco + ", bairro=" + bairro + ", cidade=" + cidade
+				+ ", estado=" + estado + ", pais=" + pais + ", cep=" + cep + ", telefone=" + telefone
+				+ ", departamentos=" + departamentos + "]";
 	}
 	
 }

@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,25 +26,29 @@ public class Departamento implements Serializable{
 	@Column(name = "id_depto")
 	private Long idDepto;
 	
-	@NotNull 
-	@Column(name = "nm_depto")
-	@Size(max = 60)
+	@Column(name = "nm_depto", nullable=false,length=60)
 	private String nomeDepto;
 
-	@JsonIgnore      //Para não acontecer ciclo cruzado (looping cliente x deptos)
+	@Column(length=14, nullable=false)
+	private Long	cnpjOuCpf;
+
+	@JsonIgnore      //Para não acontecer ciclo cruzado (looping cnpjOuCpf x deptos)
 	@ManyToOne
 	@JoinColumn(name="nr_cnpj_cpf_id")
-	private Cliente	cliente;
+	private	Cliente	cliente;
 
-	public Departamento(Long idDepto, @NotNull @Size(max = 60) String nomeDepto, Cliente cliente) {
+	public Departamento() {
+	}
+
+
+	public Departamento(Long idDepto, String nomeDepto, Long cnpjOuCpf, Cliente cliente) {
 		super();
 		this.idDepto = idDepto;
 		this.nomeDepto = nomeDepto;
+		this.cnpjOuCpf = cnpjOuCpf;
 		this.cliente = cliente;
 	}
-	public Departamento() {
-		super();
-	}
+
 	public Long getIdDepto() {
 		return idDepto;
 	}
@@ -59,12 +61,23 @@ public class Departamento implements Serializable{
 	public void setNomeDepto(String nomeDepto) {
 		this.nomeDepto = nomeDepto;
 	}
+
+	public Long getCnpjOuCpf() {
+		return cnpjOuCpf;
+	}
+
+	public void setCnpjOuCpf(Long cnpjOuCpf) {
+		this.cnpjOuCpf = cnpjOuCpf;
+	}
+
 	public Cliente getCliente() {
 		return cliente;
 	}
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,6 +101,14 @@ public class Departamento implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+
+	@Override
+	public String toString() {
+		return "Departamento [idDepto=" + idDepto + ", nomeDepto=" + nomeDepto + ", cnpjOuCpf=" + cnpjOuCpf
+				+ ", cliente=" + cliente + "]";
+	}
+
+
 	
 }
