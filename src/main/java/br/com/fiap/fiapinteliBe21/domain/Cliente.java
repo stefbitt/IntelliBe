@@ -14,7 +14,6 @@ import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "T_IB_CLIENTE")
-
 public class Cliente implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
