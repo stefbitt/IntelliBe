@@ -85,14 +85,15 @@ public class Cliente implements Serializable{
 	private	List<Departamento> departamentos = new ArrayList<>();
 
 
-	public Cliente(Long cnpjOuCpf, Integer tipoCliente, String nomeCliente, @Email String descricaoEmail,
+	public Cliente(Long cnpjOuCpf, TipoCliente tipoCliente, String nomeCliente, @Email String descricaoEmail,
 			String descricaoEndereco, String complementoEndereco, String bairro, String cidade, String estado,
 			String pais, String cep, String telefone) {
 		super();
+		System.out.println("tipo cliente construtor " + tipoCliente);
 		this.cnpjOuCpf = cnpjOuCpf;
-		this.tipoCliente = tipoCliente;
 		this.nomeCliente = nomeCliente;
-//		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
+		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
+		System.out.println("tipo cliente construtor atrr " + tipoCliente);
 		this.nomeCliente = nomeCliente;
 		this.descricaoEmail = descricaoEmail;
 		this.descricaoEndereco = descricaoEndereco;
@@ -116,24 +117,18 @@ public class Cliente implements Serializable{
 		this.cnpjOuCpf = cnpjOuCpf;
 	}
 
-//	public TipoCliente getTipoCliente() {
-//		return TipoCliente.toEnum(tipoCliente);
-//	}
-//
-//	public void setTipoCliente(TipoCliente tipo) {
-//		this.tipoCliente = tipo.getCod();
-//	}
+	public TipoCliente getTipoCliente() {
+		return TipoCliente.toEnum(tipoCliente);
+	}
+
+	public void setTipoCliente(TipoCliente tipoCliente) {
+		if (tipoCliente != null) {
+			this.tipoCliente = tipoCliente.getCod();
+		}
+	}
 
 	public String getNomeCliente() {
 		return nomeCliente;
-	}
-
-	public Integer getTipoCliente() {
-		return tipoCliente;
-	}
-
-	public void setTipoCliente(Integer tipoCliente) {
-		this.tipoCliente = tipoCliente;
 	}
 
 	public void setNomeCliente(String nomeCliente) {

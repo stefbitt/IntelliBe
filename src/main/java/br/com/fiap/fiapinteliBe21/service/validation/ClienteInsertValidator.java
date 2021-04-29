@@ -6,16 +6,18 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import br.com.fiap.fiapinteliBe21.controller.exception.FieldMessage;
 import br.com.fiap.fiapinteliBe21.domain.Cliente;
 import br.com.fiap.fiapinteliBe21.domain.enums.TipoCliente;
+import br.com.fiap.fiapinteliBe21.repository.ClienteRepository;
 import br.com.fiap.fiapinteliBe21.util.BR;
 
 /*
  * Validator
  */
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, Cliente> {
-	
 	@Override
 	public void initialize(ClienteInsert ann) {
 	}
@@ -24,13 +26,13 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
 		List<FieldMessage> list = new ArrayList<>();
 		
-
-		if	(obj.getTipoCliente().equals(2) &&
+		String tc = String.valueOf(obj.getTipoCliente());
+		if (tc.equals("PESSOAFISICA")  &&
 			!BR.isValidCPF(String.valueOf (obj.getCnpjOuCpf()))) {
 			
 			list.add(new FieldMessage("cnpjOuCpf", "CPF invalido"));
 		}
-		if	(obj.getTipoCliente().equals(1) &&
+		if (tc.equals("PESSOAJURIDICA")  &&
 			!BR.isValidCNPJ(String.valueOf (obj.getCnpjOuCpf()))) {
 			
 			list.add(new FieldMessage("cnpjOuCpf", "CNPJ invalido"));
