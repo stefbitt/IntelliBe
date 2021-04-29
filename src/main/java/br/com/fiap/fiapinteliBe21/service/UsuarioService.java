@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.fiapinteliBe21.domain.Usuario;
 import br.com.fiap.fiapinteliBe21.repository.UsuarioRepository;
-import br.com.fiap.fiapinteliBe21.service.exception.EntityNotFoundException;
+import br.com.fiap.fiapinteliBe21.service.exception.ObjectNotFoundException;
 import br.com.fiap.fiapinteliBe21.util.CriptografiaUtils;
 
 
@@ -21,7 +21,7 @@ public class UsuarioService {
     		return usuario;
 
     	} catch (Exception e) {
-			throw new EntityNotFoundException("Busca de Email não encontrado " + email);
+			throw new ObjectNotFoundException("Busca de Email não encontrado " + email);
 		}
 	}
 
