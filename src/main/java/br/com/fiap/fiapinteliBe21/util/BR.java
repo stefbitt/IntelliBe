@@ -40,7 +40,6 @@ public class BR {
 	 * @return
 	 */
 	public static boolean isValidCNPJ(final String tin) {
-		System.out.println("=================isValidcnpj " + tin);
 		if ((tin == null) || (tin.length() != 14) || tin.matches(tin.charAt(0) + "{14}"))
 			return false;
 

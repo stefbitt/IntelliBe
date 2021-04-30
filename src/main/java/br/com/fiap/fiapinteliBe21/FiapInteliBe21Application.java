@@ -41,9 +41,9 @@ public class FiapInteliBe21Application implements CommandLineRunner {
 		Usuario u2 = new Usuario(null,"PJ",65039846000180l,"Consultoria Estefani Ltda", "marcio@gmail.com","654321");
 		usuarioRepository.saveAll(Arrays.asList(u1,u2));
 		
-		Cliente c1 = new Cliente(65039846000180l,TipoCliente.PESSOAJURIDICA,"Consultoria Estefani Ltda","estefani@gmail.com","Rua Bragança,92",
+		Cliente c1 = new Cliente(65039846000180l,"PJ","Consultoria Estefani Ltda","estefani@gmail.com","Rua Bragança,92",
 				"torre 1 apto 128","Jd Abril","SBCampo","SP","Brasil","065000123","(011)2323-7899");
-		Cliente c2 = new Cliente(29390486000101l,TipoCliente.PESSOAJURIDICA,"Consultoria Verônica Ltda","ve@gmail.com","Rua Mooca,22",
+		Cliente c2 = new Cliente(29390486000101l,"PJ","Consultoria Verônica Ltda","ve@gmail.com","Rua Mooca,22",
 				"apto 128","Jd Conceição","Sto Andre","SP","Brasil","065000123", "(011)2323-7899");
 		
 		Departamento d1 = new Departamento(null, "Depto TI - Sistemas de Cobrança",65039846000180l,c1);

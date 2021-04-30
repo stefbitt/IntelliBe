@@ -8,6 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import br.com.fiap.fiapinteliBe21.controller.exception.FieldMessage;
 import br.com.fiap.fiapinteliBe21.domain.Cliente;
+import br.com.fiap.fiapinteliBe21.util.BR;
 
 /*
  * Validator
@@ -24,23 +25,17 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 
 		// inclua os testes aqui, inserindo erros na lista
 		
-//		if	(obj.getTipo().equals(TipoCliente.PESSOAFISICA.getCod()) &&
-//			!BR.isValidCPF(obj.getCpfOuCnpj())) {
-//			
-//			list.add(new FieldMessage("cpfOuCnpj", "CPF invalido"));
-//		}
-//		if	(obj.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) &&
-//				!BR.isValidCNPJ(obj.getCpfOuCnpj())) {
-//			
-//			list.add(new FieldMessage("cpfOuCnpj", "CNPJ invalido"));
-//		}
-//		Optional<Cliente> objAux = repo.findById(obj.getCnpjOuCpf());
-//		if (!obj.isPresent()) {
-//			return clienteRepository.save(cliente);
-//		}
-//		
-
-		
+		String tc = String.valueOf(obj.getTipoCliente());
+		if (tc.equals("PF")  &&
+			!BR.isValidCPF(String.valueOf (obj.getCnpjOuCpf()))) {
+			
+			list.add(new FieldMessage("cnpjOuCpf", "CPF invalido"));
+		}
+		if (tc.equals("PJ")  &&
+			!BR.isValidCNPJ(String.valueOf (obj.getCnpjOuCpf()))) {
+			
+			list.add(new FieldMessage("cnpjOuCpf", "CNPJ invalido"));
+		}
 		for (FieldMessage e : list) {
 			 context.disableDefaultConstraintViolation();
 			 context.buildConstraintViolationWithTemplate(e.getMessage())

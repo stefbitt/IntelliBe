@@ -1,8 +1,8 @@
 package br.com.fiap.fiapinteliBe21.domain.enums;
 
 public enum TipoCliente {
-	PESSOAJURIDICA(1, "Pessoa Jurídica"),
-	PESSOAFISICA (2, "Pessoa Física");
+	PJ(1, "Pessoa Jurídica"),
+	PF (2, "Pessoa Física");
 	
 	private	int	cod;
 	private	String	descricao;

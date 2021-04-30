@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import javax.validation.constraints.AssertTrue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,12 +28,12 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 		List<FieldMessage> list = new ArrayList<>();
 		
 		String tc = String.valueOf(obj.getTipoCliente());
-		if (tc.equals("PESSOAFISICA")  &&
+		if (tc.equals("PF")  &&
 			!BR.isValidCPF(String.valueOf (obj.getCnpjOuCpf()))) {
 			
 			list.add(new FieldMessage("cnpjOuCpf", "CPF invalido"));
 		}
-		if (tc.equals("PESSOAJURIDICA")  &&
+		if (tc.equals("PJ")  &&
 			!BR.isValidCNPJ(String.valueOf (obj.getCnpjOuCpf()))) {
 			
 			list.add(new FieldMessage("cnpjOuCpf", "CNPJ invalido"));

@@ -38,20 +38,17 @@ public class ClienteService {
 	 */
 	@Transactional
 	public Cliente incluir(Cliente cliente) {
-
+		
 		validarCliente(cliente);
-		validarDadosCliente(cliente);
-
 		return clienteRepository.save(cliente);
 	}
 
 	/*
 	 * Atualizar um Cliente - Id Cnpj/cpf
 	 */
+	@Transactional
 	public Cliente atualizar(Cliente cliente) {
 		buscar(cliente.getCnpjOuCpf());
-		validarDadosCliente(cliente);
-
 		return clienteRepository.save(cliente);
 	}
 
@@ -78,21 +75,4 @@ public class ClienteService {
 		}
 	}
 
-	/*
-	 * Validar Dados do Cliente
-	 */
-	private void validarDadosCliente(Cliente cliente) {
-		String tc = String.valueOf(cliente.getTipoCliente());
-		System.out.println("Cliente envio string = " + tc);
-//		System.out.println("Cliente enum f = " + TipoCliente.PESSOAFISICA.getCod());
-//		System.out.println("Cliente enum j = " + TipoCliente.PESSOAJURIDICA.getCod());
-//		if (!cliente.getTipoCliente().equals("PESSOAJURIDICA") 	&&
-//			!cliente.getTipoCliente().equals("PESSOAFISICA")) {
-//			throw new DataIntegrityException("Tipo de Cliente deve ser = 1(Juridica) ou 2(Fisica)");
-//		}
-		if (!tc.equals("PESSOAJURIDICA") 	&&
-			!tc.equals("PESSOAFISICA")) {
-			throw new DataIntegrityException("Tipo de Cliente deve ser = 1(Juridica) ou 2(Fisica)");
-		}
-	}
 }
