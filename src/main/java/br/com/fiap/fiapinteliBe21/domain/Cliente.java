@@ -9,15 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import br.com.fiap.fiapinteliBe21.controller.exception.ResourceExceptionHandler;
 import br.com.fiap.fiapinteliBe21.domain.enums.TipoCliente;
-import br.com.fiap.fiapinteliBe21.service.exception.DataIntegrityException;
 import br.com.fiap.fiapinteliBe21.service.validation.ClienteInsert;
 
 @Entity

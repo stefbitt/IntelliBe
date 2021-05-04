@@ -5,14 +5,9 @@ import java.util.List;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.validation.constraints.AssertTrue;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.fiap.fiapinteliBe21.controller.exception.FieldMessage;
 import br.com.fiap.fiapinteliBe21.domain.Cliente;
-import br.com.fiap.fiapinteliBe21.domain.enums.TipoCliente;
-import br.com.fiap.fiapinteliBe21.repository.ClienteRepository;
 import br.com.fiap.fiapinteliBe21.util.BR;
 
 /*
