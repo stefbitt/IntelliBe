@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fiap.fiapinteliBe21.domain.Cliente;
-import br.com.fiap.fiapinteliBe21.domain.enums.TipoCliente;
 import br.com.fiap.fiapinteliBe21.repository.ClienteRepository;
 import br.com.fiap.fiapinteliBe21.service.exception.DataIntegrityException;
 import br.com.fiap.fiapinteliBe21.service.exception.ObjectNotFoundException;

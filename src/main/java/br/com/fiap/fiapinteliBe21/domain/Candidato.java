@@ -1,8 +1,8 @@
 package br.com.fiap.fiapinteliBe21.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -35,22 +36,22 @@ public class Candidato implements Serializable {
 	private Long idCandidato;
 
 	@NotNull(message = "Preenchimento obrigatório")
-	@Size(min = 2, max = 60, message = "O tamanho deve ter entre 2 e 60 caracteres")
+	@Size(min = 2, max = 60, message = "O tamanho deve ser entre 2 e 60 caracteres")
 	@Column(name = "nm_candidato")
 	private String nomeCandidato;
 	
 	@NotNull(message = "Preenchimento obrigatório")
-	@CPF
+	@CPF(message="cpf inválido")
 	@Column(name = "nr_cpf")
-	private Long cpf;
+	private String cpf;
 
+	@Past	
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	@NotNull(message = "Preenchimento obrigatório")
 	@Column(name = "dt_nascimento")
-	private Date dataNascimento;
+	private LocalDate dataNascimento;
 	
 	@NotNull(message = "Preenchimento obrigatório")
-	@Size(min = 2, max = 60, message = "O tamanho deve ter entre 2 e 60 caracteres")
+	@Size(min = 2, max = 60, message = "O tamanho deve ser entre 2 e 60 caracteres")
 	@Email
 	@Column(name = "ds_email")
 	private String email;
@@ -68,11 +69,13 @@ public class Candidato implements Serializable {
 	}
 
 	public Candidato(Long idCandidato,
-			@NotNull(message = "Preenchimento obrigatório") @Size(min = 2, max = 60, message = "O tamanho deve ter entre 2 e 60 caracteres") String nomeCandidato,
-			@NotNull(message = "Preenchimento obrigatório") @CPF Long cpf,
-			@NotNull(message = "Preenchimento obrigatório") Date dataNascimento,
-			@NotNull(message = "Preenchimento obrigatório") @Size(min = 2, max = 60, message = "O tamanho deve ter entre 2 e 60 caracteres") @Email String email,
-			@Pattern(regexp = "\\(\\d{3}\\)\\d{4}-\\d{4}", message = "O tamanho deve ter formato (999)9999-9999") String telefone) {
+			@NotNull(message = "Preenchimento obrigatório") @Size(min = 2, max = 60, message = "O tamanho deve ser entre 2 e 60 caracteres")
+			String nomeCandidato,
+			@NotNull(message = "Preenchimento obrigatório") @CPF String cpf,
+			@NotNull(message = "Preenchimento obrigatório") LocalDate dataNascimento,
+			@NotNull(message = "Preenchimento obrigatório") @Size(min = 2, max = 60, message = "O tamanho deve ser entre 2 e 60 caracteres")
+			@Email String email,
+			@Pattern(regexp = "\\(\\d{3}\\)\\d{5}-\\d{4}", message = "O tamanho deve ter formato (999)99999-9999") String telefone) {
 		this.idCandidato = idCandidato;
 		this.nomeCandidato = nomeCandidato;
 		this.cpf = cpf;
@@ -97,19 +100,19 @@ public class Candidato implements Serializable {
 		this.nomeCandidato = nomeCandidato;
 	}
 
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
