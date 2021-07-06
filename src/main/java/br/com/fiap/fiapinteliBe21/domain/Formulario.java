@@ -12,8 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -22,8 +22,13 @@ public class Formulario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "id_formulario")
+//	private Long idFormulario;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name="formulario",sequenceName="SQ_TIB_FORMULARIO",allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "formulario")
 	@Column(name = "id_formulario")
 	private Long idFormulario;
 
@@ -36,7 +41,6 @@ public class Formulario implements Serializable {
 	private String descVaga;
 
 	@NotNull
-	@Future
 	@Column(name = "dt_inicio_teste")
 	private LocalDate dtInicioTeste;
 
@@ -45,12 +49,20 @@ public class Formulario implements Serializable {
 	private LocalDate dtFinalTeste;
 
 	@NotNull
+	@Column(name = "in_form_ativo")
+	private String  formularioAtivo;
+
+	@NotNull
+	@Column(name = "in_migr_resp_teste")
+	private String  migracaoRespTeste;
+	
+    @NotNull
 	@Column(name = "hr_tempo_teste")
 	private LocalTime hrTempoTeste;
 
 	@NotNull
 	@Column(name = "vl_nota_min")
-	private Short valorNotaMinima;
+	private Double valorNotaMinima;
 
 	@NotNull
 	@Column(name = "nm_publico_link")
@@ -75,23 +87,28 @@ public class Formulario implements Serializable {
 		super();
 	}
 
+
 	public Formulario(Long idFormulario, @NotNull String nomeFormulario, @NotNull String descVaga,
-			@NotNull LocalDate dtInicioTeste, @NotNull LocalDate dtFinalTeste, @NotNull LocalTime hrTempoTeste,
-			@NotNull Short valorNotaMinima, @NotNull String nomePublicoLink, @NotNull Integer qtQuestoesForm,
-			@NotNull LocalDate dtCriacaoForm, @NotNull Cliente cliente) {
+			@NotNull LocalDate dtInicioTeste, @NotNull LocalDate dtFinalTeste, @NotNull String formularioAtivo,
+			@NotNull String migracaoRespTeste, @NotNull LocalTime hrTempoTeste, @NotNull Double valorNotaMinima,
+			@NotNull String nomePublicoLink, @NotNull Integer qtQuestoesForm, @NotNull LocalDate dtCriacaoForm,
+			@NotNull Cliente cliente) {
 		super();
-		this.cliente = cliente;
-		this.descVaga = descVaga;
-		this.dtCriacaoForm = dtCriacaoForm;
-		this.dtFinalTeste = dtFinalTeste;
-		this.dtInicioTeste = dtInicioTeste;
-		this.hrTempoTeste = hrTempoTeste;
 		this.idFormulario = idFormulario;
 		this.nomeFormulario = nomeFormulario;
+		this.descVaga = descVaga;
+		this.dtInicioTeste = dtInicioTeste;
+		this.dtFinalTeste = dtFinalTeste;
+		this.formularioAtivo = formularioAtivo;
+		this.migracaoRespTeste = migracaoRespTeste;
+		this.hrTempoTeste = hrTempoTeste;
+		this.valorNotaMinima = valorNotaMinima;
 		this.nomePublicoLink = nomePublicoLink;
 		this.qtQuestoesForm = qtQuestoesForm;
-		this.valorNotaMinima = valorNotaMinima;
+		this.dtCriacaoForm = dtCriacaoForm;
+		this.cliente = cliente;
 	}
+
 
 	public Long getIdFormulario() {
 		return idFormulario;
@@ -133,6 +150,26 @@ public class Formulario implements Serializable {
 		this.dtFinalTeste = dtFinalTeste;
 	}
 
+	public String getFormularioAtivo() {
+		return formularioAtivo;
+	}
+
+
+	public void setFormularioAtivo(String formularioAtivo) {
+		this.formularioAtivo = formularioAtivo;
+	}
+
+
+	public String getMigracaoRespTeste() {
+		return migracaoRespTeste;
+	}
+
+
+	public void setMigracaoRespTeste(String migracaoRespTeste) {
+		this.migracaoRespTeste = migracaoRespTeste;
+	}
+
+
 	public LocalTime getHrTempoTeste() {
 		return hrTempoTeste;
 	}
@@ -141,11 +178,11 @@ public class Formulario implements Serializable {
 		this.hrTempoTeste = hrTempoTeste;
 	}
 
-	public Short getValorNotaMinima() {
+	public Double getValorNotaMinima() {
 		return valorNotaMinima;
 	}
 
-	public void setValorNotaMinima(Short valorNotaMinima) {
+	public void setValorNotaMinima(Double valorNotaMinima) {
 		this.valorNotaMinima = valorNotaMinima;
 	}
 
@@ -188,7 +225,5 @@ public class Formulario implements Serializable {
 	public void setFormItem(List<FormItem> formItem) {
 		this.formItem = formItem;
 	}
-	
-	
-
 }
+//1-d,2-b,3-d,4-c,5-d,6-a,7-c,8-d,9-d,10-b

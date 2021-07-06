@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -20,10 +21,19 @@ public class FormItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "id_itens_form")
+//	private Long idItensForm;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name="itensform",sequenceName="SQ_TIB_ITENS_FORM",allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "itensform")
 	@Column(name = "id_itens_form")
-	private Long idItensForm;
+	private Long idItensForm;	
+
+	@NotNull
+	@Column(name = "nr_pergunta")
+	private Integer numeroPergunta;
 
 	@NotNull
 	@Column(name = "ds_pergunta")
@@ -35,7 +45,7 @@ public class FormItem implements Serializable {
 
 	@NotNull
 	@Column(name = "sq_perg_resp")
-	private Integer sequenciaResposta;
+	private String sequenciaPergResp;
 
 	@OneToOne
 	@NotNull
@@ -49,14 +59,17 @@ public class FormItem implements Serializable {
 
 	}
 
-	public FormItem(Long idItensForm, @NotNull String descPergunta, @NotNull Integer numeroOrdemPergunta,
-			@NotNull Integer sequenciaResposta, @NotNull FormTpItem formTpItem) {
+	public FormItem(Long idItensForm, @NotNull Integer numeroPergunta, @NotNull String descPergunta,
+			@NotNull Integer numeroOrdemPergunta, @NotNull String sequenciaPergResp, @NotNull FormTpItem formTpItem,
+			Formulario formulario) {
 		super();
 		this.idItensForm = idItensForm;
+		this.numeroPergunta = numeroPergunta;
 		this.descPergunta = descPergunta;
 		this.numeroOrdemPergunta = numeroOrdemPergunta;
-		this.sequenciaResposta = sequenciaResposta;
+		this.sequenciaPergResp = sequenciaPergResp;
 		this.formTpItem = formTpItem;
+		this.formulario = formulario;
 	}
 
 	public Long getIdItensForm() {
@@ -83,12 +96,28 @@ public class FormItem implements Serializable {
 		this.numeroOrdemPergunta = numeroOrdemPergunta;
 	}
 
-	public Integer getSequenciaResposta() {
-		return sequenciaResposta;
+	public String getSequenciaResposta() {
+		return sequenciaPergResp;
 	}
 
-	public void setSequenciaResposta(Integer sequenciaResposta) {
-		this.sequenciaResposta = sequenciaResposta;
+	public void setSequenciaResposta(String sequenciaPergResp) {
+		this.sequenciaPergResp = sequenciaPergResp;
+	}
+
+	public Integer getNumeroPergunta() {
+		return numeroPergunta;
+	}
+
+	public void setNumeroPergunta(Integer numeroPergunta) {
+		this.numeroPergunta = numeroPergunta;
+	}
+
+	public String getSequenciaPergResp() {
+		return sequenciaPergResp;
+	}
+
+	public void setSequenciaPergResp(String sequenciaPergResp) {
+		this.sequenciaPergResp = sequenciaPergResp;
 	}
 
 	public FormTpItem getFormTpItem() {

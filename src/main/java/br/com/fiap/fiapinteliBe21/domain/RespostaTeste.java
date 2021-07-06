@@ -1,7 +1,7 @@
 package br.com.fiap.fiapinteliBe21.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,11 +37,10 @@ public class RespostaTeste implements Serializable{
 
 	@NotNull(message = "Preenchimento obrigatório")
 	@Column(name = "in_resposta_certa")
-	private Boolean respostaCerta;
+	private String respostaCerta;
 	
-	@Temporal(TemporalType.DATE)
 	@Column(name="dt_inclusao")
-	private Date dataInclusao;	
+	private LocalDate dataInclusao;	
 
 	@NotNull(message = "Preenchimento obrigatório")
 	@Column(length=14)
@@ -52,7 +49,7 @@ public class RespostaTeste implements Serializable{
 	@NotNull(message = "Preenchimento obrigatório")
 	@Column(name = "id_depto")
 	private Long idDepto;
-	
+
 	@JsonIgnore      //Para não acontecer ciclo cruzado (looping Candidato x Respostateste)
 	@ManyToOne
 	private	Candidato	candidato;
@@ -61,16 +58,16 @@ public class RespostaTeste implements Serializable{
 	@ManyToOne
 	private	Formulario	formulario;
 	
-	@JsonIgnore      //Para não acontecer ciclo cruzado (looping ResultadoTeste x RespostaTeste)
-	@ManyToOne
-	private	ResultadoTeste	resultadoTeste;
+//	@JsonIgnore      //Para não acontecer ciclo cruzado (looping ResultadoTeste x RespostaTeste)
+//	@ManyToOne
+//	private	ResultadoTeste	resultadoTeste;
 	
 	public RespostaTeste() {
 	}
-	
+
 	public RespostaTeste(Long idRespostaTeste, @NotNull(message = "Preenchimento obrigatório") Integer nrPergunta,
 			@NotNull(message = "Preenchimento obrigatório") String sequPergResp,
-			@NotNull(message = "Preenchimento obrigatório") Boolean respostaCerta, Date dataInclusao,
+			@NotNull(message = "Preenchimento obrigatório") String respostaCerta, LocalDate dataInclusao,
 			@NotNull(message = "Preenchimento obrigatório") Long cnpjOuCpf,
 			@NotNull(message = "Preenchimento obrigatório") Long idDepto, Candidato candidato, Formulario formulario) {
 		super();
@@ -109,19 +106,19 @@ public class RespostaTeste implements Serializable{
 		this.sequPergResp = sequPergResp;
 	}
 
-	public Boolean getRespostaCerta() {
+	public String getRespostaCerta() {
 		return respostaCerta;
 	}
 
-	public void setRespostaCerta(Boolean respostaCerta) {
+	public void setRespostaCerta(String respostaCerta) {
 		this.respostaCerta = respostaCerta;
 	}
 
-	public Date getDataInclusao() {
+	public LocalDate getDataInclusao() {
 		return dataInclusao;
 	}
 
-	public void setDataInclusao(Date dataInclusao) {
+	public void setDataInclusao(LocalDate dataInclusao) {
 		this.dataInclusao = dataInclusao;
 	}
 
@@ -157,9 +154,4 @@ public class RespostaTeste implements Serializable{
 		this.formulario = formulario;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	
 }

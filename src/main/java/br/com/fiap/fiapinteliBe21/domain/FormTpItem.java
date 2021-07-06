@@ -4,22 +4,21 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "T_IB_TIPO_ITEM")
-public class FormTpItem implements Serializable {
+	@Entity
+	@Table(name = "T_IB_TIPO_ITEM")
+//	@SequenceGenerator(name="tipoitem",sequenceName="sq_tib_tipo_item",allocationSize=1)
 
-	private static final long serialVersionUID = 1L;
-
+	public class FormTpItem implements Serializable{
+		private static final long serialVersionUID = 1L;
+		
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipoitem")
 	@Column(name = "id_tipo_item")
-	private Long idTipoItens;
+	private Long idTipoItens;	
 
 	@NotNull
 	@Column(name = "ds_tipo_item")
