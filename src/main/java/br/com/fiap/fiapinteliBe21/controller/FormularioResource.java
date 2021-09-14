@@ -22,7 +22,7 @@ import br.com.fiap.fiapinteliBe21.service.FormItemService;
 import br.com.fiap.fiapinteliBe21.service.FormularioService;
 
 @RestController
-@RequestMapping("/form")
+@RequestMapping("form")
 public class FormularioResource {
 
 	@Autowired
@@ -31,9 +31,9 @@ public class FormularioResource {
 	@Autowired
 	private FormItemService formItemService;
 
-	@GetMapping
-	public ResponseEntity<List<Formulario>> getFormulario() {
-		return ResponseEntity.ok(formularioService.listarFormulario());
+	@GetMapping("/{cnpjOuCpf}")
+	public ResponseEntity<List<Formulario>> getFormulario(@PathVariable Long cnpjOuCpf) {
+		return ResponseEntity.ok(formularioService.listarFormulario(cnpjOuCpf));
 	}
 
 	@PostMapping

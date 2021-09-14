@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "T_IB_ITENS_FORM")
@@ -53,6 +54,7 @@ public class FormItem implements Serializable {
 
 	@ManyToOne
 	@JsonIgnore
+
 	private Formulario formulario;
 
 	public FormItem() {

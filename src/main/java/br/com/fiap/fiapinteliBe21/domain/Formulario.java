@@ -10,11 +10,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "T_IB_FORMULARIO")
@@ -22,10 +27,7 @@ public class Formulario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@Column(name = "id_formulario")
-//	private Long idFormulario;
+
 	@Id
 	@SequenceGenerator(name="formulario",sequenceName="SQ_TIB_FORMULARIO",allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "formulario")
@@ -76,10 +78,12 @@ public class Formulario implements Serializable {
 	@Column(name = "dt_criacao_form")
 	private LocalDate dtCriacaoForm;
 
-	@OneToOne
+	@JsonIgnore
+	@ManyToOne
 	@NotNull
 	private Cliente cliente;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "formulario")
 	private List<FormItem> formItem;
 

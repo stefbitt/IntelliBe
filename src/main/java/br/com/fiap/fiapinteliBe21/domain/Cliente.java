@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.fiap.fiapinteliBe21.domain.enums.TipoCliente;
 import br.com.fiap.fiapinteliBe21.service.validation.ClienteInsert;
 
@@ -83,6 +85,10 @@ public class Cliente implements Serializable {
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Departamento> departamentos = new ArrayList<>();
+	
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Formulario> formulario = new ArrayList<>();
 
 	public Cliente(Long cnpjOuCpf, String tipoCliente, String nomeCliente, @Email String descricaoEmail,
 			String descricaoEndereco, String complementoEndereco, String bairro, String cidade, String estado,
