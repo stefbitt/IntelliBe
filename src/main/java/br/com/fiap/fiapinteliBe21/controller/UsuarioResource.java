@@ -23,15 +23,18 @@ public class UsuarioResource {
 	private UsuarioService usuarioService;
 
 	@GetMapping("/{email}/{senha}")
-	public ResponseEntity<Boolean> buscar(@PathVariable("email") String email, @PathVariable("senha") String senha) {
+	public ResponseEntity<Usuario> buscar(@PathVariable("email") String email, @PathVariable("senha") String senha) {
 		
-		boolean resp = false;
+//		boolean resp = false;
+		System.out.println("===========  chamou usuario = " + email + senha); 
+		
 		Usuario usuario = usuarioService.buscarEmailEsenha(email, senha);
 		
-		if	(usuario != null){
-			resp = true; 
-		} 
-		return ResponseEntity.ok().body(resp);
+		/*
+		 * if (usuario != null){ resp = true; }
+		 */
+		System.out.println(usuario);
+		return ResponseEntity.ok().body(usuario);
 	}
 
 	@PostMapping

@@ -9,61 +9,55 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.fiapinteliBe21.domain.Cliente;
 import br.com.fiap.fiapinteliBe21.domain.Departamento;
-import br.com.fiap.fiapinteliBe21.repository.ClienteRepository;
 import br.com.fiap.fiapinteliBe21.repository.DepartamentoRepository;
-import br.com.fiap.fiapinteliBe21.service.exception.EntityNotFoundException;
+import br.com.fiap.fiapinteliBe21.service.exception.ObjectNotFoundException;
 
 @Service
 public class DepartamentoService {
 	@Autowired
 	private DepartamentoRepository departamentoRepository;
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private ClienteService clienteService;
 
 	/*
 	 * Buscar Departamento por Id
 	 */
 	public Departamento buscar(Long id) {
 		return departamentoRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("Id Depto não encontrado " + id));
+				.orElseThrow(() -> new ObjectNotFoundException("Id Depto não encontrado " + id));
 	}
-	/*
-	 * Buscar Departamento por Id
-	 */
-	public Cliente buscarCliente(Long id) {
-		return clienteRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("Id Cliente não encontrado " + id));
-	}
-
 	/*
 	 * Listar Departamento
 	 */
 	public List<Departamento> listar() {
 		return departamentoRepository.findAll();
 	}
-
 	/*
 	 * Incluir um Departamento
 	 */
 	@Transactional
 	public Departamento incluir(Departamento departamento) {
-    	System.out.println("SVc Cliente = " + departamento);
 
-		Cliente obj = buscarCliente(departamento.getCnpjOuCpf());
+		Cliente obj = clienteService.buscar(departamento.getCnpjOuCpf());
 		departamento.setCliente(obj);
 		return departamentoRepository.save(departamento);
 	}
-
 	/*
 	 * Atualizar um Departamento
 	 */
+	@Transactional
 	public Departamento atualizar(Departamento departamento) {
 		buscar(departamento.getIdDepto());
-		Cliente obj = buscarCliente(departamento.getCnpjOuCpf());
+		
+		Cliente obj;
+		try {
+			obj = clienteService.buscar(departamento.getCnpjOuCpf());
+		} catch (Exception e) {
+			throw new ObjectNotFoundException("Cnpj/cpf Cliente não encontrado " + departamento.getCnpjOuCpf());
+		}
 		departamento.setCliente(obj);
 		return departamentoRepository.save(departamento);
 	}
-
 	/*
 	 * Deletar um Departamento
 	 */

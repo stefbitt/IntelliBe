@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.fiap.fiapinteliBe21.domain.FormItem;
 import br.com.fiap.fiapinteliBe21.domain.Formulario;
 import br.com.fiap.fiapinteliBe21.repository.FormItemRepository;
-import br.com.fiap.fiapinteliBe21.service.exception.EntityNotFoundException;
+import br.com.fiap.fiapinteliBe21.service.exception.ObjectNotFoundException;
 
 @Service
 public class FormItemService {
@@ -21,7 +21,7 @@ public class FormItemService {
 
 	public FormItem buscarItem(Long id) {
 		return formItemRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("Id não encontrado " + id));
+				.orElseThrow(() -> new ObjectNotFoundException("Id não encontrado " + id));
 	}
 
 	public List<FormItem> listarItem() {

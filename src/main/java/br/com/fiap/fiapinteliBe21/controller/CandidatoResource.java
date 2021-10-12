@@ -1,9 +1,7 @@
 package br.com.fiap.fiapinteliBe21.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,50 +13,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import br.com.fiap.fiapinteliBe21.domain.Departamento;
-import br.com.fiap.fiapinteliBe21.service.DepartamentoService;
+import br.com.fiap.fiapinteliBe21.domain.Candidato;
+import br.com.fiap.fiapinteliBe21.service.CandidatoService;
 
 @RestController
-@RequestMapping("departamento")
-public class DepartamentoResource {
+@RequestMapping("candidato")
+public class CandidatoResource {
 
 	@Autowired
-	private DepartamentoService departamentoService;
+	private CandidatoService candidatoService;
 
-	@PostMapping("/cadastrar")
-	public ResponseEntity<?> cadastrar(@Valid @RequestBody Departamento departamento) {
+	@PostMapping
+	public ResponseEntity<?> cadastrar(@Valid @RequestBody Candidato candidato) {
 
-		Departamento obj = departamentoService.incluir(departamento);
+		Candidato obj = candidatoService.incluir(candidato);
 		java.net.URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-							.buildAndExpand(obj.getIdDepto()).toUri();
+				.buildAndExpand(obj.getIdCandidato()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
-	@PutMapping("/atualizar/{id}")
+	@PutMapping("{id}")
 
-	public ResponseEntity<Departamento> atualizarPorId	(@Valid @RequestBody Departamento departamento,
-														 @PathVariable Long id) {
-		departamento.setIdDepto(id);
-		departamentoService.atualizar(departamento);
-		return ResponseEntity.ok().body(departamento);
+	public ResponseEntity<Candidato> atualizarPorId(@Valid @RequestBody Candidato candidato, @PathVariable Long id) {
+		candidato.setIdCandidato(id);
+		candidatoService.atualizar(candidato);
+		return ResponseEntity.ok().body(candidato);
 	}
 
-	@DeleteMapping("/deletar/{id}")
+	@DeleteMapping("{id}")
 	public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
-		departamentoService.deletar(id);
+		candidatoService.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/listar")
-	public ResponseEntity<List<Departamento>> buscarLista() {
-		List<Departamento> list = departamentoService.listar();
+	@GetMapping
+	public ResponseEntity<List<Candidato>> buscarListar() {
+		List<Candidato> list = candidatoService.listar();
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("/buscarId/{id}")
-	public ResponseEntity<Departamento> buscarPorId(@PathVariable Long id) {
-		Departamento obj = departamentoService.buscar(id);
+	@GetMapping("{id}")
+	public ResponseEntity<Candidato> buscarPorId(@PathVariable Long id) {
+		Candidato obj = candidatoService.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }

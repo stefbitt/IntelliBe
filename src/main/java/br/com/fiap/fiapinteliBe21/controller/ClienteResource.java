@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.fiap.fiapinteliBe21.controller.exception.StandardError;
+import br.com.fiap.fiapinteliBe21.controller.exception.StandardErrorMain;
 import br.com.fiap.fiapinteliBe21.domain.Cliente;
 import br.com.fiap.fiapinteliBe21.service.ClienteService;
 import br.com.fiap.fiapinteliBe21.service.exception.DataIntegrityException;
-import br.com.fiap.fiapinteliBe21.service.exception.DataRecordFoundException;
 
 @RestController
 @RequestMapping("cliente")
@@ -32,8 +31,7 @@ public class ClienteResource {
     
     @PostMapping("/cadastrar")
 	public	ResponseEntity<?> cadastrar(@Valid @RequestBody Cliente cliente) {
-    	
-		try {
+    	try {
 			Cliente obj = clienteService.incluir(cliente);
 			
 			java.net.URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -41,11 +39,10 @@ public class ClienteResource {
 			return	ResponseEntity.created(uri).build();
 		
 		} catch (DataIntegrityException e) {
-			StandardError err = new DataRecordFoundException().entityDuplicate(e, cliente.getCnpjOuCpf());
-			return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);
+			StandardErrorMain err = new StandardErrorMain(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis()); 
+			return 	new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
 		}
-	}
-
+    }	
      @PutMapping("/atualizar/{id}")
      
      public ResponseEntity<Cliente> atualizarPorId(@Valid @RequestBody Cliente cliente, @PathVariable Long id) {

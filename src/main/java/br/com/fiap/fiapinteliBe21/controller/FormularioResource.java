@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.fiapinteliBe21.domain.FormItem;
 import br.com.fiap.fiapinteliBe21.domain.Formulario;
 import br.com.fiap.fiapinteliBe21.service.FormItemService;
-import br.com.fiap.fiapinteliBe21.service.FormTpItemService;
 import br.com.fiap.fiapinteliBe21.service.FormularioService;
 
 @RestController
-@RequestMapping("/form")
+@RequestMapping("form")
 public class FormularioResource {
 
 	@Autowired
@@ -32,12 +31,9 @@ public class FormularioResource {
 	@Autowired
 	private FormItemService formItemService;
 
-	@Autowired
-	private FormTpItemService formTpItemService;
-
-	@GetMapping
-	public ResponseEntity<List<Formulario>> getFormulario() {
-		return ResponseEntity.ok(formularioService.listarFormulario());
+	@GetMapping("/{cnpjOuCpf}")
+	public ResponseEntity<List<Formulario>> getFormulario(@PathVariable Long cnpjOuCpf) {
+		return ResponseEntity.ok(formularioService.listarFormulario(cnpjOuCpf));
 	}
 
 	@PostMapping
